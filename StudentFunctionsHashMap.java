@@ -36,7 +36,7 @@ public class StudentFunctionsHashMap {
 				if(sexString.equals("남")) sex = true;
 				else if(sexString.equals("여")) sex = false;
 				else {
-					System.out.println("'남/여'로 입력하세요.");
+					System.out.println("'남/여'로 입력하세요.\n");
 					continue;
 				}
 				st.get(studentID).setSex(sex);
@@ -52,13 +52,13 @@ public class StudentFunctionsHashMap {
 	
 	//조회 기능(전체)
 	public void searchList() {
-		System.out.println("\n=============현재 등록 학생===============");
+		System.out.println("\n================현재 등록 학생================");
 		if(st.isEmpty()) System.out.println("등록된 학생이 없습니다.");
 		else {
-			System.out.println("\n학번\t\t이름");
+			System.out.println("학번\t\t이름\t\t전공");
 			Collections.sort(key);
 			for(int i = 0; i < key.size(); i++) {
-				System.out.println(st.get(key.get(i)).getStudentID() + "\t" + st.get(key.get(i)).getName());
+				System.out.println(st.get(key.get(i)).getStudentID() + "\t" + st.get(key.get(i)).getName() + "\t" + st.get(key.get(i)).getMajor());
 			}
 		}
 	}
@@ -106,12 +106,18 @@ public class StudentFunctionsHashMap {
 	public void deleteStudent(){
 		String studentID;
 		char delCheck;
+		boolean countCheck = false;
 		
 		while(true) {
 			if(st.isEmpty()) {
 				System.out.println("등록된 학생이 없습니다.");
+				if(countCheck) {
+					System.out.println("메뉴로 돌아갑니다.......");
+				}
 				break;
 			}
+			
+			countCheck = true;
 			
 			studentID = sIDCheck("삭제하실 학생의 학번 입력");
 			
@@ -124,7 +130,7 @@ public class StudentFunctionsHashMap {
 				if(delCheck == 'y') {
 					st.remove(studentID);
 					key.remove(studentID);
-					System.out.println("삭제완료!!!!!");
+					System.out.println("삭제완료!!!!!\n");
 				} else {
 					System.out.println("삭제를 취소합니다.\n");
 					continue;
@@ -176,7 +182,7 @@ public class StudentFunctionsHashMap {
 			
 			if(studentID.equals("취소")) {
 				System.out.println("메뉴로 돌아갑니다.......");
-				break;
+				return studentID;
 			}
 			if(studentID.length() != 9) {
 				System.out.println("9자리 숫자를 입력해주세요.\n");
@@ -184,7 +190,7 @@ public class StudentFunctionsHashMap {
 			}
 			
 			if(message.equals("학번을 입력하세요")) {
-				if(st.containsKey(studentID)) {
+				if(st.containsKey(studentID.substring(0,  4) + "-" + studentID.substring(4))) {
 					System.out.println("이미 존재하는 학번 입니다. 다시 입력해주세요.\n");
 					continue;
 				}
@@ -200,7 +206,7 @@ public class StudentFunctionsHashMap {
 			}	
 			break;
 		}
-		return studentID;
+		return studentID.substring(0,  4) + "-" + studentID.substring(4);
 	}
 	
 	private String nameMajorCheck(String message, String valueInput) {
@@ -237,7 +243,7 @@ public class StudentFunctionsHashMap {
 		String telNumber;
 		while(true) {
 			if(message.equals("새 연락처를 입력하세요(건너뛰려면 엔터, 현재값: ")) {
-				System.out.print(message + telNumberInput + "): ");
+				System.out.print(message + telNumberInput + "): 010-");
 				telNumber = scanner.nextLine();
 				if(telNumber.isEmpty()) {
 					telNumber = telNumberInput;
@@ -294,7 +300,7 @@ public class StudentFunctionsHashMap {
 				else break;
 				
 			} catch (Exception e) {
-				System.out.println("학년은 숫자로만 입력해주세요.");
+				System.out.println("학년은 숫자로만 입력해주세요.\n");
 			}
 		}
 		return grade;
