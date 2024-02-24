@@ -52,13 +52,14 @@ public class StudentFunctionsHashMap {
 	
 	//조회 기능(전체)
 	public void searchList() {
-		System.out.println("\n================현재 등록 학생================");
 		if(st.isEmpty()) System.out.println("등록된 학생이 없습니다.");
 		else {
+			System.out.println("\n================현재 등록 학생================");
 			System.out.println("학번\t\t이름\t\t전공");
 			Collections.sort(key);
 			for(int i = 0; i < key.size(); i++) {
-				System.out.println(st.get(key.get(i)).getStudentID() + "\t" + st.get(key.get(i)).getName() + "\t" + st.get(key.get(i)).getMajor());
+				if(st.get(key.get(i)).getName().length() < 8) System.out.println(st.get(key.get(i)).getStudentID() + "\t" + st.get(key.get(i)).getName() + "\t\t" + st.get(key.get(i)).getMajor());
+				else System.out.println(st.get(key.get(i)).getStudentID() + "\t" + st.get(key.get(i)).getName() + "\t" + st.get(key.get(i)).getMajor());
 			}
 		}
 	}
@@ -111,9 +112,7 @@ public class StudentFunctionsHashMap {
 		while(true) {
 			if(st.isEmpty()) {
 				System.out.println("등록된 학생이 없습니다.");
-				if(countCheck) {
-					System.out.println("메뉴로 돌아갑니다.......");
-				}
+				if(countCheck) System.out.println("메뉴로 돌아갑니다.......");
 				break;
 			}
 			
@@ -184,13 +183,13 @@ public class StudentFunctionsHashMap {
 				System.out.println("메뉴로 돌아갑니다.......");
 				return studentID;
 			}
-			if(studentID.length() != 9) {
+			if(!studentID.matches("\\d{9}")) {
 				System.out.println("9자리 숫자를 입력해주세요.\n");
 				continue;
 			}
 			
 			if(message.equals("학번을 입력하세요")) {
-				if(st.containsKey(studentID.substring(0,  4) + "-" + studentID.substring(4))) {
+				if(st.containsKey(studentID.substring(0, 4) + "-" + studentID.substring(4))) {
 					System.out.println("이미 존재하는 학번 입니다. 다시 입력해주세요.\n");
 					continue;
 				}
@@ -213,27 +212,24 @@ public class StudentFunctionsHashMap {
 		String value;
 		while(true) {
 			
-			if((message.equals("새 이름을 입력하세요(건너뛰려면 엔터, 현재값: ") || message.equals("새 전공을 입력하세요(건너뛰려면 엔터, 현재값: "))){
-				System.out.print(message + valueInput + "): ");
-				value = scanner.nextLine();
-				if(value.isEmpty()) {
-					value = valueInput;
-					break;
-				}
+			if((message.equals("새 이름을 입력하세요(건너뛰려면 엔터, 현재값: ") || message.equals("새 전공을 입력하세요(건너뛰려면 엔터, 현재값: ")))System.out.print(message + valueInput + "): ");
+			else System.out.print(message + ": ");
+	
+			value = scanner.nextLine();
+			if(value.isEmpty()) {
+				value = valueInput;
+				break;
 			}
-			else {
-				System.out.print(message + ": ");
-				value = scanner.nextLine();
-				if(value.isEmpty()) {
-					value = valueInput;
-					break;
-				}
-			}	
 			
 			if(!Pattern.matches("[a-zA-Z가-힣]+", value)) {
 				System.out.println("문자만 입력해주세요!!\n");
 				continue;
 			}	
+			
+			if(value.length() >= 16){
+				System.out.println("입력이 너무 깁니다!!\n");
+				continue;
+			}
 			break;
 		}	
 		return value;
@@ -242,24 +238,17 @@ public class StudentFunctionsHashMap {
 	private String telCheck(String message, String telNumberInput) {
 		String telNumber;
 		while(true) {
-			if(message.equals("새 연락처를 입력하세요(건너뛰려면 엔터, 현재값: ")) {
-				System.out.print(message + telNumberInput + "): 010-");
-				telNumber = scanner.nextLine();
-				if(telNumber.isEmpty()) {
-					telNumber = telNumberInput;
-					break;
-				}
-			}
-			else {
-				System.out.print(message + "(연속된 숫자로 입력): 010-");
-				telNumber = scanner.nextLine();
-				if(telNumber.isEmpty()) {
-					telNumber = telNumberInput;
-					break;
-				}
+			if(message.equals("새 연락처를 입력하세요(건너뛰려면 엔터, 현재값: ")) System.out.print(message + telNumberInput + "): 010-");
+			else System.out.print(message + "(연속된 숫자로 입력): 010-");
+			
+			telNumber = scanner.nextLine();
+			
+			if(telNumber.isEmpty()) {
+				telNumber = telNumberInput;
+				break;
 			}
 			
-			if(telNumber.length() != 8 || !telNumber.matches("\\d{8}")) {
+			if(!telNumber.matches("\\d{8}")) {
 				System.out.println("8자리 숫자를 입력해주세요!!!!\n");
 				continue;
 			}
@@ -274,23 +263,14 @@ public class StudentFunctionsHashMap {
 		String temp;
 		int grade;
 		while(true) {
-			if(message.equals("새 학년을 입력하세요(건너뛰려면 엔터, 현재값: ")) {
-				System.out.print(message + gradeInput +"): ");
-				temp = scanner.nextLine();
-				
-				if(temp.isEmpty()) {
-					grade = gradeInput;
-					break;
-				}
-			}
-			else {
-				System.out.print(message + "(1~4): ");
-				temp = scanner.nextLine();
-				
-				if(temp.isEmpty()) {
-					grade = gradeInput;
-					break;
-				}
+			if(message.equals("새 학년을 입력하세요(건너뛰려면 엔터, 현재값: ")) System.out.print(message + gradeInput +"): ");
+			else System.out.print(message + "(1~4): ");
+			
+			temp = scanner.nextLine();
+			
+			if(temp.isEmpty()) {
+				grade = gradeInput;
+				break;
 			}
 			
 			try {

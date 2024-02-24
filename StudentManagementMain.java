@@ -5,7 +5,6 @@ public class StudentManagementMain {
 	public static void main(String[] args) {
 		
 		StudentFunctionsHashMap fun = new StudentFunctionsHashMap();
-		//StudentFunctionArrayList fun = new StudentFunctionArrayList();
 		
 		String menuInput;
 		int menuSelect; // 메뉴 선택번호
