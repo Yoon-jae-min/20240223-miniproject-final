@@ -212,13 +212,21 @@ public class StudentFunctionsHashMap {
 		String value;
 		while(true) {
 			
-			if((message.equals("새 이름을 입력하세요(건너뛰려면 엔터, 현재값: ") || message.equals("새 전공을 입력하세요(건너뛰려면 엔터, 현재값: ")))System.out.print(message + valueInput + "): ");
-			else System.out.print(message + ": ");
-	
-			value = scanner.nextLine();
-			if(value.isEmpty()) {
-				value = valueInput;
-				break;
+			if((message.equals("새 이름을 입력하세요(건너뛰려면 엔터, 현재값: ") || message.equals("새 전공을 입력하세요(건너뛰려면 엔터, 현재값: "))) {
+				System.out.print(message + valueInput + "): ");
+				value = scanner.nextLine();
+				if(value.isEmpty()) {
+					value = valueInput;
+					break;
+				}
+			}
+			else {
+				System.out.print(message + ": ");
+				value = scanner.nextLine();
+				if(value.isEmpty()) {
+					System.out.println("입력이 필요합니다.\n");
+					continue;
+				}
 			}
 			
 			if(!Pattern.matches("[a-zA-Z가-힣]+", value)) {
@@ -238,14 +246,21 @@ public class StudentFunctionsHashMap {
 	private String telCheck(String message, String telNumberInput) {
 		String telNumber;
 		while(true) {
-			if(message.equals("새 연락처를 입력하세요(건너뛰려면 엔터, 현재값: ")) System.out.print(message + telNumberInput + "): 010-");
-			else System.out.print(message + "(연속된 숫자로 입력): 010-");
-			
-			telNumber = scanner.nextLine();
-			
-			if(telNumber.isEmpty()) {
-				telNumber = telNumberInput;
-				break;
+			if(message.equals("새 연락처를 입력하세요(건너뛰려면 엔터, 현재값: ")) {
+				System.out.print(message + telNumberInput + "): 010-");
+				telNumber = scanner.nextLine();
+				if(telNumber.isEmpty()) {
+					telNumber = telNumberInput;
+					break;
+				}
+			}
+			else {
+				System.out.print(message + "(연속된 숫자로 입력): 010-");
+				telNumber = scanner.nextLine();
+				if(telNumber.isEmpty()) {
+					System.out.println("입력이 필요합니다.\n");
+					continue;
+				}
 			}
 			
 			if(!telNumber.matches("\\d{8}")) {
@@ -263,16 +278,23 @@ public class StudentFunctionsHashMap {
 		String temp;
 		int grade;
 		while(true) {
-			if(message.equals("새 학년을 입력하세요(건너뛰려면 엔터, 현재값: ")) System.out.print(message + gradeInput +"): ");
-			else System.out.print(message + "(1~4): ");
-			
-			temp = scanner.nextLine();
-			
-			if(temp.isEmpty()) {
-				grade = gradeInput;
-				break;
+			if(message.equals("새 학년을 입력하세요(건너뛰려면 엔터, 현재값: ")) {
+				System.out.print(message + gradeInput +"): ");
+				temp = scanner.nextLine();
+				if(temp.isEmpty()) {
+					grade = gradeInput;
+					break;
+				}
 			}
-			
+			else {
+				System.out.print(message + "(1~4): ");
+				temp = scanner.nextLine();
+				if(temp.isEmpty()) {
+					System.out.println("입력이 필요합니다.\n");
+					continue;
+				}
+			}
+					
 			try {
 				grade = Integer.parseInt(temp);
 				
